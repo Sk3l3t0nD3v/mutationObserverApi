@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+  <div style="text-align:center">
+
+    <input type="number" placeholder="Enter a number" id="input" >
+
+      <div id="prova">
+
+      </div>
+      <p>totale:<span></span></p>
+  </div>
+</body>
+
+<script>
+
+  window.onload=function(){
+    document.getElementById("input").focus();
+  }
+
+const targetNode = document.querySelector('#prova');
+
+const config = {
+  attributes: true,
+  childList: true,
+  characterData: true
+};
+
+const callback = mutations => {
+  mutations.forEach(mutation => {
+
+    if (mutation.type === 'childList') {
+      const listValues = Array.from(mutation.target.children)
+          .map(node => node)
+          .reduce((acc, node) => acc + +node.textContent, 0);
+          mutation.target.nextElementSibling.children[0].innerText = listValues
+    }
+  });
+}
+
+const observer = new MutationObserver(callback);
+
+observer.observe(targetNode, config);
+
+
+
+document.getElementById('input').addEventListener('keyup', function(e){
+  if(e.keyCode == 13){
+    const value = this.value;
+    const newNode = document.createElement('p');
+    newNode.innerText = value;
+    document.getElementById('prova').appendChild(newNode);
+    this.value = '';
+  }
+});
+
+
+</script>
+</html>
