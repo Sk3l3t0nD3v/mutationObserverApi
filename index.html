@@ -15,7 +15,7 @@
       <div id="prova">
 
       </div>
-      <p>totale:<span></span></p>
+      <p>totale:<span id="totale"></span></p>
   </div>
 </body>
 
@@ -45,7 +45,7 @@ const observe=(element,cb)=>{
 
   const observer = new MutationObserver(callback);
 
-  observer.observe(targetNode, config);
+  observer.observe(element, config);
 }
 
 
